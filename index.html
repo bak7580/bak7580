@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>bak7580</title>
+  <style>
+    body { margin:0; font-family: Arial, sans-serif; color:#fff; overflow-x:hidden; }
+
+    .background { position:fixed; width:100%; height:100%; top:0; left:0; z-index:-1; overflow:hidden; }
+    .bg-image { position:absolute; width:100%; height:100%; background:url('avatar.png') center/cover no-repeat; filter:blur(20px) brightness(0.4); transform:scale(1.1); }
+    .bg-animation { position:absolute; width:200%; height:200%; background:radial-gradient(circle, rgba(255,255,255,0.05) 1px, transparent 1px); background-size:40px 40px; animation:moveBg 20s linear infinite; }
+
+    @keyframes moveBg { from{transform:translate(0,0);} to{transform:translate(-200px,-200px);} }
+
+    header { height:100vh; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; }
+    h1 { font-size:48px; margin:0; }
+    p { opacity:.8; }
+
+    .avatar { width:120px; height:120px; border-radius:50%; margin-bottom:20px; border:2px solid rgba(255,255,255,0.2); box-shadow:0 0 15px rgba(255,255,255,0.2); }
+
+    .scroll-indicator { position:absolute; bottom:20px; font-size:24px; opacity:0.7; animation:scrollAnim 1.5s infinite; }
+    @keyframes scrollAnim { 0%{transform:translateY(0);} 50%{transform:translateY(10px);} 100%{transform:translateY(0);} }
+
+    .btn { margin:10px; padding:12px 20px; background:#1f1f1f; color:#fff; text-decoration:none; border-radius:10px; transition:.3s; display:inline-flex; align-items:center; gap:10px; border:1px solid #333; }
+    .btn:hover { background:#2a2a2a; transform:translateY(-2px); box-shadow:0 0 12px rgba(255,255,255,0.3); }
+
+    .icon { width:20px; height:20px; }
+
+    section { padding:60px 20px; max-width:800px; margin:auto; }
+
+    .card { background:rgba(20,20,20,0.8); backdrop-filter:blur(10px); padding:20px; border-radius:12px; margin-top:20px; transition:transform .3s; }
+    .card:hover { transform:translateY(-5px); }
+
+    .links a { display:flex; align-items:center; gap:10px; margin:10px 0; padding:10px; background:#141414; border-radius:8px; text-decoration:none; color:#fff; transition:.3s; border:1px solid #222; }
+    .links a:hover { background:#1f1f1f; box-shadow:0 0 8px rgba(255,255,255,0.2); transform:translateX(5px); }
+
+    iframe { width:100%; height:400px; border:none; border-radius:12px; margin-top:10px; }
+
+    @keyframes fadeIn { from{opacity:0; transform:translateY(20px);} to{opacity:1; transform:translateY(0);} }
+  </style>
+</head>
+<body>
+
+<div class="background">
+  <div class="bg-image"></div>
+  <div class="bg-animation"></div>
+</div>
+
+<header>
+  <img src="avatar.png" class="avatar">
+  <h1>bak7580</h1>
+  <p>Мой сайт и проекты</p>
+  <div>
+    <a href="https://www.youtube.com/@bak7580" class="btn" target="_blank">
+      <img src="https://cdn.simpleicons.org/youtube/ff0000" class="icon"> YouTube
+    </a>
+    <a href="https://t.me/bak7580" class="btn" target="_blank">
+      <img src="https://cdn.simpleicons.org/telegram/2AABEE" class="icon"> Telegram
+    </a>
+  </div>
+  <div class="scroll-indicator">⬇</div>
+</header>
+
+<section>
+  <h2>Обо мне</h2>
+  <div class="card">
+    <p>Привет! Я bak7580. Здесь ты найдёшь мои проекты, каналы и другую активность в интернете.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ссылки</h2>
+  <div class="card links">
+    <a href="https://www.youtube.com/@bak7580" target="_blank">
+      <img src="https://cdn.simpleicons.org/youtube/ff0000" class="icon"> Основной YouTube канал
+    </a>
+    <a href="https://www.youtube.com/@baklashka7580" target="_blank">
+      <img src="https://cdn.simpleicons.org/youtube/ff0000" class="icon"> Второй YouTube канал
+    </a>
+    <a href="https://t.me/bak7580" target="_blank">
+      <img src="https://cdn.simpleicons.org/telegram/2AABEE" class="icon"> Telegram канал
+    </a>
+    <a href="https://scratch.mit.edu/users/bak7580/" target="_blank">
+      <img src="https://cdn.simpleicons.org/scratch/ff7f00" class="icon"> Scratch
+    </a>
+    <a href="https://gamejolt.com/@bak7580" target="_blank">
+      <img src="https://cdn.simpleicons.org/gamejolt/6cc644" class="icon"> GameJolt
+    </a>
+    <a href="https://music.yandex.ru/artist/24471020" target="_blank">
+      <img src="https://yastatic.net/s3/doc-binary/src/mediaservices/yandex_music_icon_ru_circle_mono.svg" class="icon"> Яндекс Музыка
+    </a>
+    <a href="https://open.spotify.com/artist/4APe1ZlChJgSuLSTiq4HEh" target="_blank">
+      <img src="https://cdn.simpleicons.org/spotify/1DB954" class="icon"> Spotify
+    </a>
+  </div>
+</section>
+
+<section>
+  <h2>Проекты</h2>
+
+  <div class="card">
+    <p><b>Поход в магазин</b><br>Игра в разработке.</p>
+    <a href="https://gamejolt.com/games/shopping_trip/817652" class="btn" target="_blank">Смотреть проект</a>
+  </div>
+
+  <div class="card">
+    <p><b>Ненормальный сосед</b></p>
+    <a href="https://www.youtube.com/watch?v=wnJRRaG1w1A" class="btn" target="_blank">Смотреть на YouTube</a>
+  </div>
+
+</section>
+
+<section>
+  <h2>Контакты</h2>
+  <div class="card">
+    <p>Связаться со мной можно через Telegram.</p>
+  </div>
+</section>
+
+</body>
+</html>
