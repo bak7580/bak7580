@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Музыка</title>
+
+<style>
+  body {
+    margin: 0;
+    background: #0a0a0a;
+    color: white;
+    font-family: Arial, sans-serif;
+    padding: 30px;
+  }
+
+  h1 {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .album {
+    display: flex;
+    gap: 20px;
+    background: #141414;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 30px;
+  }
+
+  .cover {
+    width: 150px;
+    height: 150px;
+    border-radius: 10px;
+    object-fit: cover;
+  }
+
+  .album-info {
+    flex: 1;
+  }
+
+  .album-title {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+
+  .track {
+    margin: 10px 0;
+    padding: 10px;
+    background: #1a1a1a;
+    border-radius: 8px;
+  }
+
+  audio {
+    width: 100%;
+    margin-top: 5px;
+  }
+
+  .download {
+    display: inline-block;
+    margin-top: 5px;
+    font-size: 14px;
+    color: #aaa;
+    text-decoration: none;
+  }
+
+  .download:hover {
+    color: white;
+  }
+</style>
+</head>
+
+<body>
+
+<h1>🎧 Моя музыка</h1>
+
+<!-- АЛЬБОМ 1 -->
+<div class="album">
+<img src="album1.jpg" class="cover">
+<div class="album-info">
+<div class="album-title">Поход в магазин (OST) • 17.06.2025</div>
+
+<div class="track">Меню (02:55)
+<audio controls src="tracks/menu.mp3"></audio>
+<a href="tracks/menu.mp3" download class="download">Скачать</a></div>
+
+<div class="track">Дом (03:12)
+<audio controls src="tracks/dom.mp3"></audio>
+<a href="tracks/dom.mp3" download class="download">Скачать</a></div>
+
+<div class="track">Паркур (03:23)
+<audio controls src="tracks/parkour.mp3"></audio>
+<a href="tracks/parkour.mp3" download class="download">Скачать</a></div>
+
+<div class="track">Улица (03:14)
+<audio controls src="tracks/street.mp3"></audio>
+<a href="tracks/street.mp3" download class="download">Скачать</a></div>
+
+<div class="track">Магазин (02:04)
+<audio controls src="tracks/shop.mp3"></audio>
+<a href="tracks/shop.mp3" download class="download">Скачать</a></div>
+
+<div class="track">Сотрудники (03:06)
+<audio controls src="tracks/workers.mp3"></audio>
+<a href="tracks/workers.mp3" download class="download">Скачать</a></div>
+
+<div class="track">Сбор продуктов (02:02)
+<audio controls src="tracks/products.mp3"></audio>
+<a href="tracks/products.mp3" download class="download">Скачать</a></div>
+
+<div class="track">Взрыв (02:32)
+<audio controls src="tracks/explosion.mp3"></audio>
+<a href="tracks/explosion.mp3" download class="download">Скачать</a></div>
+
+<div class="track">Возврата нет (03:27)
+<audio controls src="tracks/no_return.mp3"></audio>
+<a href="tracks/no_return.mp3" download class="download">Скачать</a></div>
+
+<div class="track">Это твоя вина (03:57)
+<audio controls src="tracks/your_fault.mp3"></audio>
+<a href="tracks/your_fault.mp3" download class="download">Скачать</a></div>
+
+<div class="track">Титры (03:33)
+<audio controls src="tracks/credits.mp3"></audio>
+<a href="tracks/credits.mp3" download class="download">Скачать</a></div>
+
+</div>
+</div>
+
+<!-- АЛЬБОМ 2 -->
+<div class="album">
+<img src="album2.jpg" class="cover">
+<div class="album-info">
+<div class="album-title">Карусель2010 • 29.08.2025</div>
+
+<div class="track">Холмы (03:20)
+<audio controls src="tracks/hills.mp3"></audio>
+<a href="tracks/hills.mp3" download class="download">Скачать</a></div>
+
+<div class="track">Безмятежность (03:02)
+<audio controls src="tracks/calm.mp3"></audio>
+<a href="tracks/calm.mp3" download class="download">Скачать</a></div>
+
+<div class="track">Карусель (02:42)
+<audio controls src="tracks/carousel.mp3"></audio>
+<a href="tracks/carousel.mp3" download class="download">Скачать</a></div>
+
+<div class="track">Звёздочки (04:28)
+<audio controls src="tracks/stars.mp3"></audio>
+<a href="tracks/stars.mp3" download class="download">Скачать</a></div>
+
+</div>
+</div>
+
+<!-- АЛЬБОМ 3 -->
+<div class="album">
+<img src="album3.jpg" class="cover">
+<div class="album-info">
+<div class="album-title">Неоновый прилив • 23.12.2025</div>
+
+<div class="track">Неоновый прилив (04:05)
+<audio controls src="tracks/neon.mp3"></audio>
+<a href="tracks/neon.mp3" download class="download">Скачать</a></div>
+
+<div class="track">Небесный шёпот (02:27)
+<audio controls src="tracks/sky.mp3"></audio>
+<a href="tracks/sky.mp3" download class="download">Скачать</a></div>
+
+<div class="track">Облачно (04:33)
+<audio controls src="tracks/cloudy.mp3"></audio>
+<a href="tracks/cloudy.mp3" download class="download">Скачать</a></div>
+
+<div class="track">Это твоя вина (cover) (03:40)
+<audio controls src="tracks/your_fault_cover.mp3"></audio>
+<a href="tracks/your_fault_cover.mp3" download class="download">Скачать</a></div>
+
+<div class="track">Светлый путь (01:16)
+<audio controls src="tracks/light_path.mp3"></audio>
+<a href="tracks/light_path.mp3" download class="download">Скачать</a></div>
+
+<div class="track">Облачно (Черновик) (04:33)
+<audio controls src="tracks/cloudy_draft.mp3"></audio>
+<a href="tracks/cloudy_draft.mp3" download class="download">Скачать</a></div>
+
+</div>
+</div>
+
+</body>
+</html>
