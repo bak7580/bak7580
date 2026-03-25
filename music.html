@@ -3,15 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <title>Музыка</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
   body {
-    margin: 0;
-    background: #0a0a0a;
-    color: white;
-    font-family: Arial, sans-serif;
-    padding: 30px;
-  }
+  margin: 0;
+  background: #0a0a0a;
+  color: white;
+  font-family: 'Montserrat', sans-serif;
+  padding: 30px;
+}
 
   .bg {
   position: fixed;
@@ -38,9 +39,11 @@
 }
   
   h1 {
-    text-align: center;
-    margin-bottom: 40px;
-  }
+  text-align: center;
+  margin-bottom: 40px;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
 
   .album {
   display: flex;
@@ -100,6 +103,35 @@
     color: white;
   }
 
+/* FULLSCREEN VIEW */
+.fullscreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.95);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.3s;
+}
+
+.fullscreen.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.fullscreen img {
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 15px;
+}
+
+  
   @media (max-width: 600px) {
 
   body {
@@ -113,9 +145,17 @@
   }
 
   .cover {
-    width: 100px;
-    height: 100px;
-  }
+  width: 120px;
+  height: 120px;
+  border-radius: 10px;
+  object-fit: cover;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.cover:hover {
+  transform: scale(1.05);
+}
 
   .album-title {
     font-size: 18px;
@@ -136,6 +176,9 @@
   <img src="album3.jpg">
 </div>
   
+  <div class="fullscreen" id="fullscreen">
+  <img id="fullscreenImg">
+</div>
 <h1>🎧 Моя музыка</h1>
 
 <!-- АЛЬБОМ 1 -->
@@ -252,6 +295,24 @@
 const images = document.querySelectorAll(".bg img");
 let current = 0;
 
+<script>
+const covers = document.querySelectorAll(".cover");
+const fullscreen = document.getElementById("fullscreen");
+const fullscreenImg = document.getElementById("fullscreenImg");
+
+covers.forEach(img => {
+  img.addEventListener("click", () => {
+    fullscreen.classList.add("active");
+    fullscreenImg.src = img.src;
+  });
+});
+
+fullscreen.addEventListener("click", () => {
+  fullscreen.classList.remove("active");
+});
+</script>
+
+  
 setInterval(() => {
   images[current].classList.remove("active");
   current = (current + 1) % images.length;
