@@ -296,6 +296,9 @@ const images = document.querySelectorAll(".bg img");
 let current = 0;
 
 <script>
+const images = document.querySelectorAll(".bg img");
+let current = 0;
+
 const covers = document.querySelectorAll(".cover");
 const fullscreen = document.getElementById("fullscreen");
 const fullscreenImg = document.getElementById("fullscreenImg");
@@ -304,8 +307,8 @@ setInterval(() => {
   images[current].classList.remove("active");
   current = (current + 1) % images.length;
   images[current].classList.add("active");
-}, 5000); // смена каждые 5 секунд
-  
+}, 5000);
+
 covers.forEach(img => {
   img.addEventListener("click", () => {
     fullscreen.classList.add("active");
@@ -316,10 +319,6 @@ covers.forEach(img => {
 fullscreen.addEventListener("click", () => {
   fullscreen.classList.remove("active");
 });
-</script>
-  
-
-  
 </script>
 </body>
 </html>
