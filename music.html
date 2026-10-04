@@ -1,336 +1,1095 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<title>Музыка</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Вся музыка — bak7580</title>
+
+  <meta name="description" content="Слушать и скачать альбомы и саундтреки bak7580: Поход в магазин (OST), Карусель2010, Неоновый прилив, Разные комнаты.">
+  <meta name="theme-color" content="#0a0a0f">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="music.playlist">
+  <meta property="og:url" content="https://bak7580.ru/music.html">
+  <meta property="og:site_name" content="bak7580">
+  <meta property="og:title" content="Вся музыка — bak7580">
+  <meta property="og:description" content="Официальная дискография bak7580. Слушайте онлайн и скачивайте треки в оригинальном качестве.">
+  <meta property="og:image" content="album1.jpg">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Вся музыка — bak7580">
+  <meta name="twitter:description" content="Официальная дискография bak7580. Слушайте онлайн и скачивайте треки в оригинальном качестве.">
+  <meta name="twitter:image" content="album1.jpg">
+
+  <!-- Favicons -->
   <link rel="icon" href="favicon.ico">
-<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
-<link rel="icon" type="image/png" sizes="192x192" href="favicon-192.png">
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="favicon-192.png">
 
-<style>
-  body {
-  margin: 0;
-  background: #0a0a0a;
-  color: white;
-  font-family: 'Montserrat', sans-serif;
-  padding: 30px;
-}
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-  .bg {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -3;
-  overflow: hidden;
-}
+  <style>
+    :root {
+      --bg: #090a0f;
+      --card-bg: rgba(18, 22, 34, 0.72);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --card-hover-border: rgba(99, 102, 241, 0.4);
+      --accent: #6366f1;
+      --accent-glow: rgba(99, 102, 241, 0.35);
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+    }
 
-.bg img {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: blur(40px) brightness(0.4);
-  opacity: 0;
-  transition: opacity 2s ease-in-out;
-}
+    * {
+      box-sizing: border-box;
+    }
 
-.bg img.active {
-  opacity: 1;
-}
-  
-  h1 {
-  text-align: center;
-  margin-bottom: 40px;
-  font-weight: 600;
-  letter-spacing: 1px;
-}
+    html {
+      scroll-behavior: smooth;
+    }
 
-  .album {
-  display: flex;
-  gap: 15px;
-  background: rgba(20, 20, 20, 0.65); /* прозрачность */
-  backdrop-filter: blur(10px); /* стекло эффект */
-  padding: 15px;
-  border-radius: 12px;
-  margin-bottom: 20px;
-  max-width: 900px;
-  margin-left: auto;
-  margin-right: auto;
-  transition: transform 0.2s ease;
-}
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      padding: 0 20px 60px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
 
-.album:hover {
-  transform: scale(1.02);
-}
+    /* Dynamic rotating blur background */
+    .bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+      overflow: hidden;
+      background: #090b10;
+    }
 
-  .cover {
-  width: 120px;
-  height: 120px;
-  border-radius: 10px;
-  object-fit: cover;
-  cursor: pointer;
-  transition: 0.2s;
-}
+    .bg img {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: blur(55px) brightness(0.28) saturate(1.3);
+      opacity: 0;
+      transform: scale(1.1);
+      transition: opacity 2s ease-in-out;
+    }
 
-.cover:hover {
-  transform: scale(1.05);
-}
+    .bg img.active {
+      opacity: 1;
+    }
 
-  .album-info {
-    flex: 1;
-  }
+    .bg-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: radial-gradient(circle at center, transparent 0%, rgba(9, 10, 15, 0.6) 100%);
+      pointer-events: none;
+    }
 
-  .album-title {
-    font-size: 20px;
-    margin-bottom: 10px;
-  }
+    /* Top navigation bar */
+    .top-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      background: rgba(9, 11, 18, 0.75);
+      border-bottom: 1px solid var(--card-border);
+      margin: 0 -20px 40px;
+      padding: 14px 24px;
+    }
 
-  .track {
-  margin: 8px 0;
-  padding: 8px;
-  background: rgba(30, 30, 30, 0.6);
-  border-radius: 8px;
-}
+    .nav-container {
+      max-width: 960px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
 
-  audio {
-    width: 100%;
-    margin-top: 5px;
-  }
+    .btn-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      color: #fff;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
 
-  .download {
-    display: inline-block;
-    margin-top: 5px;
-    font-size: 14px;
-    color: #aaa;
-    text-decoration: none;
-  }
+    .btn-back:hover {
+      background: rgba(255, 255, 255, 0.14);
+      border-color: rgba(255, 255, 255, 0.25);
+      transform: translateX(-3px);
+    }
 
-  .download:hover {
-    color: white;
-  }
+    .nav-brand {
+      font-weight: 700;
+      font-size: 16px;
+      color: #cbd5e1;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
 
-/* FULLSCREEN VIEW */
-.fullscreen {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.95);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 999;
-  opacity: 0;
-  pointer-events: none;
-  transition: 0.3s;
-}
+    .nav-stream-links {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
 
-.fullscreen.active {
-  opacity: 1;
-  pointer-events: all;
-}
+    .stream-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #fff;
+      text-decoration: none;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      transition: all 0.2s ease;
+    }
 
-.fullscreen img {
-  max-width: 90%;
-  max-height: 90%;
-  border-radius: 15px;
-}
+    .stream-pill:hover {
+      background: rgba(255, 255, 255, 0.12);
+      transform: translateY(-2px);
+    }
 
-  
-  @media (max-width: 600px) {
+    .stream-pill.spotify:hover {
+      border-color: rgba(29, 185, 84, 0.5);
+      box-shadow: 0 4px 15px rgba(29, 185, 84, 0.25);
+    }
 
-  body {
-    padding: 15px;
-  }
+    .stream-pill.yandex:hover {
+      border-color: rgba(252, 63, 29, 0.5);
+      box-shadow: 0 4px 15px rgba(252, 63, 29, 0.25);
+    }
 
-  .album {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
+    /* Page Header */
+    .page-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
 
-  .cover {
-  width: 120px;
-  height: 120px;
-  border-radius: 10px;
-  object-fit: cover;
-  cursor: pointer;
-  transition: 0.2s;
-}
+    h1 {
+      font-size: 42px;
+      font-weight: 800;
+      margin: 0 0 10px;
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
 
-.cover:hover {
-  transform: scale(1.05);
-}
+    .page-subtitle {
+      color: var(--text-muted);
+      font-size: 16px;
+      margin: 0 auto;
+      max-width: 580px;
+    }
 
-  .album-title {
-    font-size: 18px;
-  }
+    /* Album card */
+    .album {
+      display: flex;
+      gap: 26px;
+      background: var(--card-bg);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      padding: 24px;
+      border-radius: 18px;
+      margin-bottom: 28px;
+      max-width: 920px;
+      margin-left: auto;
+      margin-right: auto;
+      border: 1px solid var(--card-border);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+      transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+    }
 
-  audio {
-    width: 100%;
-  }
+    .album:hover {
+      border-color: rgba(255, 255, 255, 0.16);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+    }
 
-}
-</style>
+    .cover-wrapper {
+      position: relative;
+      width: 140px;
+      height: 140px;
+      flex-shrink: 0;
+      border-radius: 14px;
+      overflow: hidden;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45);
+    }
+
+    .cover {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+      display: block;
+    }
+
+    .cover-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 600;
+      gap: 4px;
+    }
+
+    .cover-wrapper:hover .cover {
+      transform: scale(1.08);
+    }
+
+    .cover-wrapper:hover .cover-overlay {
+      opacity: 1;
+    }
+
+    .album-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .album-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .album-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .album-badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      background: rgba(99, 102, 241, 0.18);
+      color: #818cf8;
+      border: 1px solid rgba(99, 102, 241, 0.35);
+    }
+
+    .album-badge.new {
+      background: rgba(34, 197, 94, 0.18);
+      color: #4ade80;
+      border-color: rgba(34, 197, 94, 0.35);
+    }
+
+    /* Track styles */
+    .track {
+      margin: 10px 0;
+      padding: 12px 14px;
+      background: rgba(13, 16, 26, 0.65);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      transition: all 0.2s ease;
+    }
+
+    .track:hover {
+      background: rgba(20, 26, 42, 0.85);
+      border-color: rgba(255, 255, 255, 0.12);
+    }
+
+    .track.is-playing {
+      border-color: rgba(99, 102, 241, 0.6);
+      background: rgba(26, 32, 54, 0.95);
+      box-shadow: 0 0 16px rgba(99, 102, 241, 0.2);
+    }
+
+    .track-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .track-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #f1f5f9;
+    }
+
+    .playing-indicator {
+      display: none;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #22c55e;
+      box-shadow: 0 0 8px #22c55e;
+      animation: pulsePlay 1.5s infinite;
+    }
+
+    .track.is-playing .playing-indicator {
+      display: inline-block;
+    }
+
+    @keyframes pulsePlay {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.4); opacity: 0.6; }
+    }
+
+    .track-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    audio {
+      flex: 1;
+      height: 38px;
+      outline: none;
+    }
+
+    .download-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      color: #cbd5e1;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+    }
+
+    .download-btn:hover {
+      color: #fff;
+      background: rgba(99, 102, 241, 0.25);
+      border-color: rgba(99, 102, 241, 0.5);
+      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.25);
+      transform: translateY(-2px);
+    }
+
+    .icon-svg {
+      width: 16px;
+      height: 16px;
+      display: inline-block;
+      flex-shrink: 0;
+    }
+
+    /* Note block inside album 4 */
+    .album-notice {
+      background: rgba(99, 102, 241, 0.08);
+      border: 1px dashed rgba(99, 102, 241, 0.3);
+      padding: 12px 16px;
+      border-radius: 10px;
+      font-size: 13px;
+      color: #94a3b8;
+      margin-top: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* Fullscreen Lightbox */
+    .fullscreen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.92);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+      cursor: zoom-out;
+    }
+
+    .fullscreen.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .fullscreen img {
+      max-width: 90vw;
+      max-height: 85vh;
+      border-radius: 16px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+      transform: scale(0.95);
+      transition: transform 0.25s ease;
+    }
+
+    .fullscreen.active img {
+      transform: scale(1);
+    }
+
+    .fullscreen-close {
+      position: absolute;
+      top: 24px;
+      right: 28px;
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #fff;
+      font-size: 20px;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+
+    .fullscreen-close:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    @media (max-width: 700px) {
+      body { padding: 0 14px 40px; }
+      .top-nav { margin: 0 -14px 25px; padding: 12px 16px; }
+      .nav-brand { display: none; }
+      .album {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 18px;
+      }
+      .album-header {
+        justify-content: center;
+        text-align: center;
+      }
+      .cover-wrapper {
+        width: 160px;
+        height: 160px;
+      }
+      .track-controls {
+        flex-direction: column;
+        gap: 8px;
+      }
+      .download-btn {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  </style>
 </head>
 
 <body>
-<div class="bg">
-  <img src="album1.jpg" class="active">
-  <img src="album2.jpg">
-  <img src="album3.jpg">
-</div>
-  
-  <div class="fullscreen" id="fullscreen">
-  <img id="fullscreenImg">
-</div>
-<h1>Вся моя музыка</h1>
 
-<!-- АЛЬБОМ 1 -->
+<!-- Background rotator -->
+<div class="bg" aria-hidden="true">
+  <img src="album1.jpg" class="active" alt="">
+  <img src="album2.jpg" alt="">
+  <img src="album3.jpg" alt="">
+  <img src="album4.jpg" alt="">
+</div>
+<div class="bg-overlay" aria-hidden="true"></div>
+
+<!-- Lightbox Modal -->
+<div class="fullscreen" id="fullscreen" role="dialog" aria-modal="true" aria-label="Просмотр обложки">
+  <div class="fullscreen-close" aria-label="Закрыть">✕</div>
+  <img id="fullscreenImg" src="" alt="Обложка альбома крупно">
+</div>
+
+<!-- Sticky Top Navigation -->
+<nav class="top-nav">
+  <div class="nav-container">
+    <a href="index.html" class="btn-back">
+      <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M19 12H5M12 19l-7-7 7-7"/>
+      </svg>
+      На главную
+    </a>
+
+    <div class="nav-brand">
+      bak7580 • Музыка
+    </div>
+
+    <div class="nav-stream-links">
+      <a href="https://music.yandex.ru/artist/24471020" class="stream-pill yandex" target="_blank" rel="noopener noreferrer">
+        <svg class="icon-svg" viewBox="0 0 24 24" fill="#FC3F1D" aria-hidden="true">
+          <circle cx="12" cy="12" r="10"/>
+        </svg>
+        Яндекс
+      </a>
+      <a href="https://open.spotify.com/artist/4APe1ZlChJgSuLSTiq4HEh" class="stream-pill spotify" target="_blank" rel="noopener noreferrer">
+        <svg class="icon-svg" viewBox="0 0 24 24" fill="#1DB954" aria-hidden="true">
+          <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.49 17.306a.75.75 0 0 1-1.03.248c-2.82-1.722-6.368-2.112-10.548-1.157a.75.75 0 1 1-.334-1.462c4.582-1.047 8.513-.6 11.664 1.341a.75.75 0 0 1 .248 1.03zm1.466-3.262a.938.938 0 0 1-1.29.31c-3.227-1.984-8.148-2.558-11.966-1.399a.938.938 0 0 1-.552-1.792c4.364-1.325 9.79-.684 13.498 1.591a.937.937 0 0 1 .31 1.29zm.126-3.393c-3.87-2.298-10.257-2.51-13.971-1.383a1.125 1.125 0 1 1-.652-2.154c4.267-1.295 11.314-1.043 15.753 1.593a1.125 1.125 0 0 1-1.13 1.944z"/>
+        </svg>
+        Spotify
+      </a>
+    </div>
+  </div>
+</nav>
+
+<div class="page-header">
+  <h1>Вся моя музыка</h1>
+  <p class="page-subtitle">Все официальные релизы, мини-альбомы и саундтреки. Слушайте прямо на сайте или скачивайте в оригинальном качестве.</p>
+</div>
+
+<!-- ==================== АЛЬБОМ 4 ==================== -->
 <div class="album">
-<img src="album1.jpg" class="cover">
-<div class="album-info">
-<div class="album-title">Поход в магазин (OST) • 17.06.2025</div>
+  <div class="cover-wrapper" title="Нажмите, чтобы увеличить">
+    <img src="album4.jpg" class="cover" alt="Обложка Разные комнаты">
+    <div class="cover-overlay">🔍 Увеличить</div>
+  </div>
 
-<div class="track">Меню (02:55)
-<audio controls src="tracks/menu.mp3"></audio>
-<a href="tracks/menu.mp3" download class="download">Скачать</a></div>
+  <div class="album-info">
+    <div class="album-header">
+      <div class="album-title">Разные комнаты • 2026</div>
+      <span class="album-badge new">Новый релиз • EP</span>
+    </div>
 
-<div class="track">Дом (03:12)
-<audio controls src="tracks/dom.mp3"></audio>
-<a href="tracks/dom.mp3" download class="download">Скачать</a></div>
+    <div class="track">
+      <div class="track-meta">
+        <span class="track-title"><span class="playing-indicator"></span>Слишком облачно</span>
+      </div>
+      <div class="track-controls">
+        <audio controls preload="none" src="tracks/4_raznye_komnaty/slihkom_oblachno.mp3"></audio>
+        <a href="tracks/4_raznye_komnaty/slihkom_oblachno.mp3" download="bak7580 - Слишком облачно.mp3" class="download-btn">
+          <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          Скачать
+        </a>
+      </div>
+    </div>
 
-<div class="track">Паркур (03:23)
-<audio controls src="tracks/parkour.mp3"></audio>
-<a href="tracks/parkour.mp3" download class="download">Скачать</a></div>
-
-<div class="track">Улица (03:14)
-<audio controls src="tracks/street.mp3"></audio>
-<a href="tracks/street.mp3" download class="download">Скачать</a></div>
-
-<div class="track">Магазин (02:04)
-<audio controls src="tracks/shop.mp3"></audio>
-<a href="tracks/shop.mp3" download class="download">Скачать</a></div>
-
-<div class="track">Сотрудники (03:06)
-<audio controls src="tracks/workers.mp3"></audio>
-<a href="tracks/workers.mp3" download class="download">Скачать</a></div>
-
-<div class="track">Сбор продуктов (02:02)
-<audio controls src="tracks/products.mp3"></audio>
-<a href="tracks/products.mp3" download class="download">Скачать</a></div>
-
-<div class="track">Взрыв (02:32)
-<audio controls src="tracks/explosion.mp3"></audio>
-<a href="tracks/explosion.mp3" download class="download">Скачать</a></div>
-
-<div class="track">Возврата нет (03:27)
-<audio controls src="tracks/no_return.mp3"></audio>
-<a href="tracks/no_return.mp3" download class="download">Скачать</a></div>
-
-<div class="track">Это твоя вина (03:57)
-<audio controls src="tracks/your_fault.mp3"></audio>
-<a href="tracks/your_fault.mp3" download class="download">Скачать</a></div>
-
-<div class="track">Титры (03:33)
-<audio controls src="tracks/credits.mp3"></audio>
-<a href="tracks/credits.mp3" download class="download">Скачать</a></div>
-
-</div>
+    <div class="album-notice">
+      💡 Файлы треков этого альбома распределены в папку: <code>tracks/4_raznye_komnaty/</code>
+    </div>
+  </div>
 </div>
 
-<!-- АЛЬБОМ 2 -->
+<!-- ==================== АЛЬБОМ 3 ==================== -->
 <div class="album">
-<img src="album2.jpg" class="cover">
-<div class="album-info">
-<div class="album-title">Карусель2010 • 29.08.2025</div>
+  <div class="cover-wrapper" title="Нажмите, чтобы увеличить">
+    <img src="album3.jpg" class="cover" alt="Обложка Неоновый прилив">
+    <div class="cover-overlay">🔍 Увеличить</div>
+  </div>
 
-<div class="track">Холмы (03:20)
-<audio controls src="tracks/hills.mp3"></audio>
-<a href="tracks/hills.mp3" download class="download">Скачать</a></div>
+  <div class="album-info">
+    <div class="album-header">
+      <div class="album-title">Неоновый прилив • 23.12.2025</div>
+      <span class="album-badge">Мини-альбом</span>
+    </div>
 
-<div class="track">Безмятежность (03:02)
-<audio controls src="tracks/calm.mp3"></audio>
-<a href="tracks/calm.mp3" download class="download">Скачать</a></div>
+    <div class="track">
+      <div class="track-meta">
+        <span class="track-title"><span class="playing-indicator"></span>Неоновый прилив (04:05)</span>
+      </div>
+      <div class="track-controls">
+        <audio controls preload="none" src="tracks/3_neonovyj_priliv/neon.mp3"></audio>
+        <a href="tracks/3_neonovyj_priliv/neon.mp3" download="bak7580 - Неоновый прилив.mp3" class="download-btn">
+          <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          Скачать
+        </a>
+      </div>
+    </div>
 
-<div class="track">Карусель (02:42)
-<audio controls src="tracks/carousel.mp3"></audio>
-<a href="tracks/carousel.mp3" download class="download">Скачать</a></div>
+    <div class="track">
+      <div class="track-meta">
+        <span class="track-title"><span class="playing-indicator"></span>Небесный шёпот (02:27)</span>
+      </div>
+      <div class="track-controls">
+        <audio controls preload="none" src="tracks/3_neonovyj_priliv/sky.mp3"></audio>
+        <a href="tracks/3_neonovyj_priliv/sky.mp3" download="bak7580 - Небесный шёпот.mp3" class="download-btn">
+          <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          Скачать
+        </a>
+      </div>
+    </div>
 
-<div class="track">Звёздочки (04:28)
-<audio controls src="tracks/stars.mp3"></audio>
-<a href="tracks/stars.mp3" download class="download">Скачать</a></div>
+    <div class="track">
+      <div class="track-meta">
+        <span class="track-title"><span class="playing-indicator"></span>Облачно (04:33)</span>
+      </div>
+      <div class="track-controls">
+        <audio controls preload="none" src="tracks/3_neonovyj_priliv/cloudy.mp3"></audio>
+        <a href="tracks/3_neonovyj_priliv/cloudy.mp3" download="bak7580 - Облачно.mp3" class="download-btn">
+          <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          Скачать
+        </a>
+      </div>
+    </div>
 
+    <div class="track">
+      <div class="track-meta">
+        <span class="track-title"><span class="playing-indicator"></span>Это твоя вина (cover) (03:40)</span>
+      </div>
+      <div class="track-controls">
+        <audio controls preload="none" src="tracks/3_neonovyj_priliv/your_fault_cover.mp3"></audio>
+        <a href="tracks/3_neonovyj_priliv/your_fault_cover.mp3" download="bak7580 - Это твоя вина (cover).mp3" class="download-btn">
+          <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          Скачать
+        </a>
+      </div>
+    </div>
+
+    <div class="track">
+      <div class="track-meta">
+        <span class="track-title"><span class="playing-indicator"></span>Светлый путь (01:16)</span>
+      </div>
+      <div class="track-controls">
+        <audio controls preload="none" src="tracks/3_neonovyj_priliv/light_path.mp3"></audio>
+        <a href="tracks/3_neonovyj_priliv/light_path.mp3" download="bak7580 - Светлый путь.mp3" class="download-btn">
+          <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          Скачать
+        </a>
+      </div>
+    </div>
+
+    <div class="track">
+      <div class="track-meta">
+        <span class="track-title"><span class="playing-indicator"></span>Облачно (Черновик) (04:33)</span>
+      </div>
+      <div class="track-controls">
+        <audio controls preload="none" src="tracks/3_neonovyj_priliv/cloudy_draft.mp3"></audio>
+        <a href="tracks/3_neonovyj_priliv/cloudy_draft.mp3" download="bak7580 - Облачно (Черновик).mp3" class="download-btn">
+          <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          Скачать
+        </a>
+      </div>
+    </div>
+
+  </div>
 </div>
-</div>
 
-<!-- АЛЬБОМ 3 -->
+<!-- ==================== АЛЬБОМ 2 ==================== -->
 <div class="album">
-<img src="album3.jpg" class="cover">
-<div class="album-info">
-<div class="album-title">Неоновый прилив • 23.12.2025</div>
+  <div class="cover-wrapper" title="Нажмите, чтобы увеличить">
+    <img src="album2.jpg" class="cover" alt="Обложка Карусель2010">
+    <div class="cover-overlay">🔍 Увеличить</div>
+  </div>
 
-<div class="track">Неоновый прилив (04:05)
-<audio controls src="tracks/neon.mp3"></audio>
-<a href="tracks/neon.mp3" download class="download">Скачать</a></div>
+  <div class="album-info">
+    <div class="album-header">
+      <div class="album-title">Карусель2010 • 29.08.2025</div>
+      <span class="album-badge">EP</span>
+    </div>
 
-<div class="track">Небесный шёпот (02:27)
-<audio controls src="tracks/sky.mp3"></audio>
-<a href="tracks/sky.mp3" download class="download">Скачать</a></div>
+    <div class="track">
+      <div class="track-meta">
+        <span class="track-title"><span class="playing-indicator"></span>Холмы (03:20)</span>
+      </div>
+      <div class="track-controls">
+        <audio controls preload="none" src="tracks/2_karusel2010/hills.mp3"></audio>
+        <a href="tracks/2_karusel2010/hills.mp3" download="bak7580 - Холмы.mp3" class="download-btn">
+          <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          Скачать
+        </a>
+      </div>
+    </div>
 
-<div class="track">Облачно (04:33)
-<audio controls src="tracks/cloudy.mp3"></audio>
-<a href="tracks/cloudy.mp3" download class="download">Скачать</a></div>
+    <div class="track">
+      <div class="track-meta">
+        <span class="track-title"><span class="playing-indicator"></span>Безмятежность (03:02)</span>
+      </div>
+      <div class="track-controls">
+        <audio controls preload="none" src="tracks/2_karusel2010/calm.mp3"></audio>
+        <a href="tracks/2_karusel2010/calm.mp3" download="bak7580 - Безмятежность.mp3" class="download-btn">
+          <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          Скачать
+        </a>
+      </div>
+    </div>
 
-<div class="track">Это твоя вина (cover) (03:40)
-<audio controls src="tracks/your_fault_cover.mp3"></audio>
-<a href="tracks/your_fault_cover.mp3" download class="download">Скачать</a></div>
+    <div class="track">
+      <div class="track-meta">
+        <span class="track-title"><span class="playing-indicator"></span>Карусель (02:42)</span>
+      </div>
+      <div class="track-controls">
+        <audio controls preload="none" src="tracks/2_karusel2010/carousel.mp3"></audio>
+        <a href="tracks/2_karusel2010/carousel.mp3" download="bak7580 - Карусель.mp3" class="download-btn">
+          <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          Скачать
+        </a>
+      </div>
+    </div>
 
-<div class="track">Светлый путь (01:16)
-<audio controls src="tracks/light_path.mp3"></audio>
-<a href="tracks/light_path.mp3" download class="download">Скачать</a></div>
+    <div class="track">
+      <div class="track-meta">
+        <span class="track-title"><span class="playing-indicator"></span>Звёздочки (04:28)</span>
+      </div>
+      <div class="track-controls">
+        <audio controls preload="none" src="tracks/2_karusel2010/stars.mp3"></audio>
+        <a href="tracks/2_karusel2010/stars.mp3" download="bak7580 - Звёздочки.mp3" class="download-btn">
+          <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          Скачать
+        </a>
+      </div>
+    </div>
 
-<div class="track">Облачно (Черновик) (04:33)
-<audio controls src="tracks/cloudy_draft.mp3"></audio>
-<a href="tracks/cloudy_draft.mp3" download class="download">Скачать</a></div>
-
+  </div>
 </div>
+
+<!-- ==================== АЛЬБОМ 1 ==================== -->
+<div class="album">
+  <div class="cover-wrapper" title="Нажмите, чтобы увеличить">
+    <img src="album1.jpg" class="cover" alt="Обложка Поход в магазин">
+    <div class="cover-overlay">🔍 Увеличить</div>
+  </div>
+
+  <div class="album-info">
+    <div class="album-header">
+      <div class="album-title">Поход в магазин (OST) • 17.06.2025</div>
+      <span class="album-badge">Официальный OST</span>
+    </div>
+
+    <div class="track">
+      <div class="track-meta">
+        <span class="track-title"><span class="playing-indicator"></span>Меню (02:55)</span>
+      </div>
+      <div class="track-controls">
+        <audio controls preload="none" src="tracks/1_pokhod_v_magazin/menu.mp3"></audio>
+        <a href="tracks/1_pokhod_v_magazin/menu.mp3" download="bak7580 - Меню.mp3" class="download-btn">
+          <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          Скачать
+        </a>
+      </div>
+    </div>
+
+    <div class="track">
+      <div class="track-meta">
+        <span class="track-title"><span class="playing-indicator"></span>Дом (03:12)</span>
+      </div>
+      <div class="track-controls">
+        <audio controls preload="none" src="tracks/1_pokhod_v_magazin/dom.mp3"></audio>
+        <a href="tracks/1_pokhod_v_magazin/dom.mp3" download="bak7580 - Дом.mp3" class="download-btn">
+          <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          Скачать
+        </a>
+      </div>
+    </div>
+
+    <div class="track">
+      <div class="track-meta">
+        <span class="track-title"><span class="playing-indicator"></span>Паркур (03:23)</span>
+      </div>
+      <div class="track-controls">
+        <audio controls preload="none" src="tracks/1_pokhod_v_magazin/parkour.mp3"></audio>
+        <a href="tracks/1_pokhod_v_magazin/parkour.mp3" download="bak7580 - Паркур.mp3" class="download-btn">
+          <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          Скачать
+        </a>
+      </div>
+    </div>
+
+    <div class="track">
+      <div class="track-meta">
+        <span class="track-title"><span class="playing-indicator"></span>Улица (03:14)</span>
+      </div>
+      <div class="track-controls">
+        <audio controls preload="none" src="tracks/1_pokhod_v_magazin/street.mp3"></audio>
+        <a href="tracks/1_pokhod_v_magazin/street.mp3" download="bak7580 - Улица.mp3" class="download-btn">
+          <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          Скачать
+        </a>
+      </div>
+    </div>
+
+    <div class="track">
+      <div class="track-meta">
+        <span class="track-title"><span class="playing-indicator"></span>Магазин (02:04)</span>
+      </div>
+      <div class="track-controls">
+        <audio controls preload="none" src="tracks/1_pokhod_v_magazin/shop.mp3"></audio>
+        <a href="tracks/1_pokhod_v_magazin/shop.mp3" download="bak7580 - Магазин.mp3" class="download-btn">
+          <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          Скачать
+        </a>
+      </div>
+    </div>
+
+    <div class="track">
+      <div class="track-meta">
+        <span class="track-title"><span class="playing-indicator"></span>Сотрудники (03:06)</span>
+      </div>
+      <div class="track-controls">
+        <audio controls preload="none" src="tracks/1_pokhod_v_magazin/workers.mp3"></audio>
+        <a href="tracks/1_pokhod_v_magazin/workers.mp3" download="bak7580 - Сотрудники.mp3" class="download-btn">
+          <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          Скачать
+        </a>
+      </div>
+    </div>
+
+    <div class="track">
+      <div class="track-meta">
+        <span class="track-title"><span class="playing-indicator"></span>Сбор продуктов (02:02)</span>
+      </div>
+      <div class="track-controls">
+        <audio controls preload="none" src="tracks/1_pokhod_v_magazin/products.mp3"></audio>
+        <a href="tracks/1_pokhod_v_magazin/products.mp3" download="bak7580 - Сбор продуктов.mp3" class="download-btn">
+          <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          Скачать
+        </a>
+      </div>
+    </div>
+
+    <div class="track">
+      <div class="track-meta">
+        <span class="track-title"><span class="playing-indicator"></span>Взрыв (02:32)</span>
+      </div>
+      <div class="track-controls">
+        <audio controls preload="none" src="tracks/1_pokhod_v_magazin/explosion.mp3"></audio>
+        <a href="tracks/1_pokhod_v_magazin/explosion.mp3" download="bak7580 - Взрыв.mp3" class="download-btn">
+          <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          Скачать
+        </a>
+      </div>
+    </div>
+
+    <div class="track">
+      <div class="track-meta">
+        <span class="track-title"><span class="playing-indicator"></span>Возврата нет (03:27)</span>
+      </div>
+      <div class="track-controls">
+        <audio controls preload="none" src="tracks/1_pokhod_v_magazin/no_return.mp3"></audio>
+        <a href="tracks/1_pokhod_v_magazin/no_return.mp3" download="bak7580 - Возврата нет.mp3" class="download-btn">
+          <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          Скачать
+        </a>
+      </div>
+    </div>
+
+    <div class="track">
+      <div class="track-meta">
+        <span class="track-title"><span class="playing-indicator"></span>Это твоя вина (03:57)</span>
+      </div>
+      <div class="track-controls">
+        <audio controls preload="none" src="tracks/1_pokhod_v_magazin/your_fault.mp3"></audio>
+        <a href="tracks/1_pokhod_v_magazin/your_fault.mp3" download="bak7580 - Это твоя вина.mp3" class="download-btn">
+          <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          Скачать
+        </a>
+      </div>
+    </div>
+
+    <div class="track">
+      <div class="track-meta">
+        <span class="track-title"><span class="playing-indicator"></span>Титры (03:33)</span>
+      </div>
+      <div class="track-controls">
+        <audio controls preload="none" src="tracks/1_pokhod_v_magazin/credits.mp3"></audio>
+        <a href="tracks/1_pokhod_v_magazin/credits.mp3" download="bak7580 - Титры.mp3" class="download-btn">
+          <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          Скачать
+        </a>
+      </div>
+    </div>
+
+  </div>
 </div>
+
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-
   const images = document.querySelectorAll(".bg img");
   let current = 0;
 
-  const covers = document.querySelectorAll(".cover");
+  const covers = document.querySelectorAll(".cover-wrapper");
   const fullscreen = document.getElementById("fullscreen");
   const fullscreenImg = document.getElementById("fullscreenImg");
+  const fullscreenClose = document.querySelector(".fullscreen-close");
+  const audios = document.querySelectorAll("audio");
 
-  // Смена фона
+  // Rotating background
   setInterval(() => {
     images[current].classList.remove("active");
     current = (current + 1) % images.length;
     images[current].classList.add("active");
-  }, 5000);
+  }, 6000);
 
-  // Открытие обложки
-  covers.forEach(img => {
-    img.addEventListener("click", () => {
-      fullscreen.classList.add("active");
-      fullscreenImg.src = img.src;
+  // Open cover fullscreen
+  covers.forEach(wrapper => {
+    wrapper.addEventListener("click", () => {
+      const img = wrapper.querySelector("img");
+      if (img) {
+        fullscreenImg.src = img.src;
+        fullscreen.classList.add("active");
+      }
     });
   });
 
-  // Закрытие
-  fullscreen.addEventListener("click", () => {
-    fullscreen.classList.remove("active");
+  // Close cover fullscreen
+  fullscreen.addEventListener("click", (e) => {
+    if (e.target !== fullscreenImg) {
+      fullscreen.classList.remove("active");
+    }
   });
 
+  if (fullscreenClose) {
+    fullscreenClose.addEventListener("click", () => {
+      fullscreen.classList.remove("active");
+    });
+  }
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && fullscreen.classList.contains("active")) {
+      fullscreen.classList.remove("active");
+    }
+  });
+
+  // Single audio playback & active track highlight
+  audios.forEach(audio => {
+    const parentTrack = audio.closest(".track");
+
+    audio.addEventListener("play", () => {
+      // Pause all other audio players
+      audios.forEach(other => {
+        if (other !== audio) {
+          other.pause();
+          const otherTrack = other.closest(".track");
+          if (otherTrack) otherTrack.classList.remove("is-playing");
+        }
+      });
+
+      if (parentTrack) parentTrack.classList.add("is-playing");
+    });
+
+    audio.addEventListener("pause", () => {
+      if (parentTrack) parentTrack.classList.remove("is-playing");
+    });
+
+    audio.addEventListener("ended", () => {
+      if (parentTrack) parentTrack.classList.remove("is-playing");
+    });
+  });
 });
 </script>
+
 </body>
 </html>
