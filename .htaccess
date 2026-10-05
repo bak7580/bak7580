@@ -1,0 +1,18 @@
+# Clean URLs for bak7580.ru
+# Removes .html from address bar and enables clean URLs
+
+RewriteEngine On
+
+# 1. Redirect /index.html to /
+RewriteCond %{THE_REQUEST} ^[A-Z]{3,}\s/index\.html [NC]
+RewriteRule ^index\.html$ / [R=301,L]
+
+# 2. Redirect *.html to clean URL (e.g., /music.html -> /music)
+RewriteCond %{THE_REQUEST} ^[A-Z]{3,}\s/+(.+?)\.html[\s?] [NC]
+RewriteRule ^ %1 [R=301,L]
+
+# 3. Internally rewrite clean URL to .html if file exists (e.g., /music -> music.html)
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{DOCUMENT_ROOT}/$1.html -f
+RewriteRule ^(.+?)/?$ $1.html [L]
