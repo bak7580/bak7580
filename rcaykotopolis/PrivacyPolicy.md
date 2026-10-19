@@ -1,7 +1,7 @@
 # Политика конфиденциальности · Privacy Policy
 
 **Игра:** Рыжий Кот и Й — Котополис · **Обновлено / Last updated:** 19.10.2026
-**Контакт / Contact:** [ВСТАВЬТЕ ВАШ E-MAIL / INSERT YOUR E-MAIL]
+**Контакт / Contact:** bak7580@gmail.com
 
 ---
 
