@@ -1,0 +1,267 @@
+/* Общий бумажный стиль bak7580: картон, рваные листы, скотч, кнопки, штампы.
+   Подключается на index.html и music.html вместе с paper.js. */
+
+:root {
+  --cardboard: #555552;
+  --on-board: #ecece8;
+  --paper: #f6f6f4;
+  --ink: #111111;
+  --ink-soft: #2a2a2a;
+  --ink-muted: #5c5c5c;
+  --tape: rgba(232, 232, 228, 0.62);
+  --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
+  --font-text: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  /* Шум для «потёртого» оттиска штампов (сильнее) и заголовков на картоне (слабее) */
+  --worn: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='w' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.45' numOctaves='3' seed='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 5 0 0 0 -1.6'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23w)'/%3E%3C/svg%3E");
+  --worn-light: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='w' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.35' numOctaves='3' seed='9' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 6 0 0 0 -1.2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23w)'/%3E%3C/svg%3E");
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-text);
+  color: var(--ink);
+  overflow-x: hidden;
+  line-height: 1.6;
+  /* Серый картон с зерном */
+  background-color: var(--cardboard);
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='g' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.9 0 0 0 -0.36'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='800'%3E%3Cfilter id='m' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.004' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.35 0 0 0 -0.12'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23m)'/%3E%3C/svg%3E");
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible {
+  outline: 2px dashed var(--ink);
+  outline-offset: 3px;
+}
+
+.on-board a:focus-visible,
+.on-board button:focus-visible {
+  outline-color: var(--on-board);
+}
+
+.icon-svg {
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+/* Крупный заголовок прямо на картоне, с потёртым оттиском */
+.stencil {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -3px;
+  color: var(--on-board);
+  -webkit-mask-image: var(--worn-light);
+  mask-image: var(--worn-light);
+  -webkit-mask-size: 240px;
+  mask-size: 240px;
+}
+
+/* ---------- Листы бумаги ---------- */
+/* .sheet отвечает за поворот, тень и скотч; .sheet-paper — за рваный край и текстуру */
+.sheet {
+  position: relative;
+  transform: rotate(var(--rot, 0deg));
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.28)) drop-shadow(0 6px 10px rgba(0, 0, 0, 0.18));
+  transition: transform 0.25s ease, filter 0.25s ease;
+  margin-bottom: 26px;
+}
+
+@media (hover: hover) {
+  .sheet.lift:hover {
+    transform: rotate(0deg) translateY(-3px);
+    filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.25)) drop-shadow(0 14px 18px rgba(0, 0, 0, 0.22));
+  }
+}
+
+.sheet-paper {
+  background-color: var(--paper);
+  background-image: var(--paper-tex, none);
+  background-position: var(--tex-x, 0) var(--tex-y, 0);
+  padding: 32px 34px;
+}
+
+.sheet-paper p {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+.sheet.strip {
+  display: inline-block;
+}
+
+.strip .sheet-paper {
+  padding: 12px 18px;
+}
+
+.strip p {
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+/* Скотч */
+.tape {
+  position: absolute;
+  z-index: 2;
+  width: 96px;
+  height: 28px;
+  background: var(--tape);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
+  clip-path: polygon(2% 0, 98% 5%, 100% 26%, 97% 50%, 100% 76%, 98% 100%, 3% 95%, 0 72%, 3% 48%, 0 22%);
+  pointer-events: none;
+}
+
+.tape--top {
+  top: -13px;
+  left: calc(50% - 48px);
+  transform: rotate(var(--tape-rot, 0deg));
+}
+
+.tape--tl {
+  top: 4px;
+  left: -28px;
+  transform: rotate(calc(-38deg + var(--tape-rot, 0deg)));
+}
+
+.tape--tr {
+  top: 4px;
+  right: -28px;
+  transform: rotate(calc(38deg + var(--tape-rot, 0deg)));
+}
+
+/* Фото, приклеенное к картону */
+.photo {
+  position: relative;
+  flex-shrink: 0;
+  margin: 0;
+  padding: 9px 9px 30px;
+  background: var(--paper);
+  transform: rotate(var(--photo-rot, -4deg));
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.25), 0 10px 18px rgba(0, 0, 0, 0.2);
+}
+
+.photo img {
+  display: block;
+  object-fit: cover;
+}
+
+/* ---------- Кнопки ---------- */
+.btn {
+  padding: 11px 18px;
+  background: var(--paper);
+  color: var(--ink);
+  text-decoration: none;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.3;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  border: 2px solid var(--ink);
+  box-shadow: 4px 4px 0 var(--ink);
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.btn:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 5px 5px 0 var(--ink);
+}
+
+.btn:active {
+  transform: translate(4px, 4px);
+  box-shadow: 0 0 0 var(--ink);
+}
+
+.btn-sm {
+  padding: 7px 12px;
+  font-size: 13px;
+  gap: 8px;
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+.btn-sm:hover {
+  box-shadow: 4px 4px 0 var(--ink);
+}
+
+/* Штамп */
+.stamp {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border: 2.5px solid var(--ink);
+  border-radius: 3px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--ink);
+  opacity: 0.85;
+  transform: rotate(-4deg);
+  -webkit-mask-image: var(--worn);
+  mask-image: var(--worn);
+  -webkit-mask-size: 160px;
+  mask-size: 160px;
+}
+
+/* ---------- Заголовки разделов и подвал (на картоне) ---------- */
+.section-title {
+  font-family: var(--font-mono);
+  font-size: 20px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin: 0 0 22px;
+  color: var(--on-board);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.section-title::after {
+  content: '';
+  flex: 1;
+  height: 2px;
+  background: var(--on-board);
+  opacity: 0.45;
+}
+
+footer {
+  text-align: center;
+  padding: 36px 20px 44px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--on-board);
+  opacity: 0.8;
+}
+
+footer p {
+  margin: 0;
+}
+
+@media (max-width: 640px) {
+  .sheet-paper { padding: 26px 22px; }
+  .strip .sheet-paper { padding: 12px 16px; }
+  .tape--tl { left: -20px; }
+  .tape--tr { right: -20px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .sheet, .btn { transition: none; }
+}
